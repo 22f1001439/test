@@ -9,24 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
+      - name: prime-cache-c4418d3
+        id: prime-cache-c4418d3
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache
+          key: cache-c4418d3
 
-    - name: prime-cache-c4418d3
-      id: prime-cache-c4418d3
-      uses: actions/cache@v4
-      with:
-        path: ~/.npm
-        key: cache-c4418d3
+      - name: echo-cache-result
+        shell: bash
+        run: |
+          echo "Cache hit result: ${{ steps.prime-cache-c4418d3.outputs.cache-hit }}"
 
-    - name: echo-cache-result
-      run: |
-        echo "Cache hit: ${{ steps.prime-cache-c4418d3.outputs.cache-hit }}"
-
-    - name: Install dependencies
-      run: npm install
+      - name: Done
+        run: echo "Workflow completed successfully!"
